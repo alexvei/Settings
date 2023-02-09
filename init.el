@@ -6,9 +6,6 @@
 (require 'package)
 (require 'json)
 
-;; Set the Python interpreter
-(setq python-shell-interpreter "C:\\Users\\Work\\AppData\\Local\\Programs\\Python\\Python39\\python.exe")
-
 ;; Add package archives
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -17,12 +14,13 @@
 (package-initialize)
 
 ;; Enable Elpy
-(elpy-enable)
+'(elpy-enable)
 
 (setq elpy-shell-echo-input nil
       elpy-shell-echo-output nil
       elpy-shell-use-project-root nil
       python-shell-interactive-shell-args "--simple-prompt -i")
+
 
 ;; Enable line numbers globally
 (global-linum-mode t)
@@ -66,7 +64,8 @@
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(ein pdfgrep py-autopep8 pdf-tools org-modern material-theme elpy doom-themes better-defaults)))
+   '(python-mode ein pdfgrep py-autopep8 pdf-tools org-modern material-theme elpy doom-themes better-defaults))
+ '(warning-suppress-types '(((python python-shell-completion-native-turn-on-maybe)))))
 
 ;; Custom faces
 (custom-set-faces
@@ -75,4 +74,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
