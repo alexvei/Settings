@@ -13,6 +13,9 @@
 ;; Disable the startup screen
 (setq inhibit-startup-screen t)
 
+;; Proper Wrapping
+(global-visual-line-mode 1)
+
 ;; Highlight current line
 (global-hl-line-mode t)
 
@@ -35,6 +38,11 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+;; Add ELPA repository
+(add-to-list 'package-archives
+             '("ELPA" . "https://tromey.com/elpa/") t)
 (package-initialize)
 
 
