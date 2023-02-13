@@ -1,76 +1,61 @@
-;; ===================================
-;; MELPA Package Support
-;; ===================================
+;; Load the dracula theme
+(load-theme 'dracula t)
 
-;; Enables basic packaging support
-(require 'package)
-(require 'json)
+;; Remove menu bar
+(menu-bar-mode -1)
 
-;; Add package archives
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; Remove tool bar
+(tool-bar-mode -1)
 
-;; Initialize the package system
-(package-initialize)
-
-;; Enable Elpy
-'(elpy-enable)
-
-(setq elpy-shell-echo-input nil
-      elpy-shell-echo-output nil
-      elpy-shell-use-project-root nil
-      python-shell-interactive-shell-args "--simple-prompt -i")
-
-
-;; Enable line numbers globally
+;; Show line numbers on the left side
 (global-linum-mode t)
 
-;; Save the desktop state
-(desktop-save-mode 1)
+;; Disable the startup screen
+(setq inhibit-startup-screen t)
 
-;; ===================================
-;; Doom Theme
-;; ===================================
+;; Highlight current line
+(global-hl-line-mode t)
 
-;; Load the doom-themes package
-(require 'doom-themes)
+;; Set the tab width to 4 spaces
+(setq-default tab-width 4)
 
-;; Doom Theme configuration
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;; Use y/n instead of yes/no
+(fset 'yes-or-no-p 'y-or-n-p)
 
-  ;; Load the doom-one theme
-  (load-theme 'doom-one t)
+;; Disable "custom" message
+(setq custom-file (make-temp-file "emacs-custom"))
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
+;; Save backup files in a separate directory
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
+;; Add MELPA repository
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
-  ;; For treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
 
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config)
+;; Enable neotree
+(require  'neotree)
+  (global-set-key [f8] 'neotree-toggle)
+  (setq neo-show-hidden-files t)
+  (setq neo-smart-open t)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
-;; Custom variables
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(inhibit-startup-screen t)
- '(package-selected-packages
-   '(python-mode ein pdfgrep py-autopep8 pdf-tools org-modern material-theme elpy doom-themes better-defaults))
- '(warning-suppress-types '(((python python-shell-completion-native-turn-on-maybe)))))
 
-;; Custom faces
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Enable python-mode for .py files
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+
+;; Use the standard Python interpreter
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "-i")
+
+;; Enable flymake for python-mode
+(add-hook 'python-mode-hook 'flymake-mode)
+
+;; Enable company-mode
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
