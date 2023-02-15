@@ -1,3 +1,9 @@
+;; Emacs starts on the left side of the screen.
+(add-to-list 'default-frame-alist '(left . 0))
+(add-to-list 'default-frame-alist '(top . 0))
+(add-to-list 'default-frame-alist '(width . 80))
+(add-to-list 'default-frame-alist '(height . 100))
+
 ;; Load the dracula theme
 (load-theme 'dracula t)
 
