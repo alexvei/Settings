@@ -1,3 +1,2 @@
-# Settings
-Settings for stuff
-init.el is the emacs configuration file.
+# dotfiles
+Old init.el , emacs
